@@ -30,8 +30,8 @@ Util.getNav = async function (req, res, next) {
 * Build the classification view HTML
 * ************************************ */
 Util.buildClassificationGrid = async function(data){
-    let grid
-    if(data.length > 0){
+    let grid = "";
+    if(data && data.length > 0){
       grid = '<ul id="inv-display">'
       data.forEach(vehicle => { 
         grid += '<li>'
@@ -56,15 +56,35 @@ Util.buildClassificationGrid = async function(data){
     } else { 
       grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
     }
-    return grid
+    return grid;
   }
-
+/* *************************************
+* Build the Inventory view HTML
+* ********************************** */
+Util.wrapVehicleDetail = async function (data) {
+  if (!data) {
+    return "<p>Vehicle not found</p>";
+  }
+  let vehicleDetail = `
+    <div class="item-details">
+      <img class="full-image" src="${data.inv_image}" alt="${data.inv_make} ${data.inv_model}">
+      <div class="item-content">
+        <h2>${data.inv_make} ${data.inv_model} (${data.inv_year})</h2>
+        <p><strong>Price:</strong> $${data.inv_price.toLocaleString()}</p>
+        <p><strong>Mileage:</strong> ${data.inv_miles.toLocaleString()} miles</p>
+        <p><strong>Description:</strong> ${data.inv_description}</p>
+      </div>
+    </div>
+    `;
+    
+    return vehicleDetail;
+};
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
 
 module.exports = Util

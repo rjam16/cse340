@@ -11,7 +11,9 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
+
 
 /***********************
  * View Engine and Templates
@@ -34,6 +36,13 @@ app.use(async (req, res, next) => {
 })
 
 /* ***********************
+ * Local Server Information
+ * Values from .env (environment) file
+ *************************/
+const port = process.env.PORT
+const host = process.env.HOST
+
+/* ***********************
 * Express Error Handler
 * Place after all other middleware
 *************************/
@@ -47,14 +56,6 @@ app.use(async (err, req, res, next) => {
     nav
   })
 })
-
-
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- *************************/
-const port = process.env.PORT
-const host = process.env.HOST
 
 /* ***********************
  * Log statement to confirm server operation
