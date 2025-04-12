@@ -1,0 +1,33 @@
+<div class="container">
+    <!-- The Content Heading -->
+    <% if (title) { %>
+        <h1><%= title %></h1>
+        <% } else {
+          res.redirect('/')
+        } %>
+    
+    <%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+       <% errors.array().forEach(error => { %>
+         <li><%= error.msg %></li>
+      <%  }) %>
+       </ul>
+      <% } %>
+    
+    <!-- The Inventory Management View -->
+    <div class="vehMgmtMenu">
+        <p class="addClassification"><a class="addNewClassLink" href="/inv/addNewClass" title="Add New Classification">Add New Classification</a></p>
+        <p class="addVehicle"><a class="addNewVehLink" href="/inv/addNewVeh" title="Add New Vehicle">Add New vehicle</a></p>
+    </div>
+    <div class="vehmgmt">
+      <h2>Manage Inventory</h2>
+      <p>Choose a classification to see those inventory items.</p>
+      <%- classificationSelect %>
+  
+      <table id="inventoryDisplay"></table>
+      <noscript>JavaScript must be enabled to use this page.</noscript>
+    </div>
+</div>
+
+<script src="../../js/inventory.js"></script>
