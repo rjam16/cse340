@@ -15,7 +15,6 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require('./routes/accountRoute')
-const errorRoute = require('./routes/errorRoute')
 const utilities = require("./utilities/")
 const bodyParser = require("body-parser")
 
@@ -60,8 +59,8 @@ app.use("/inv", inventoryRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
-// Account routes
-app.use("/account", require("./routes/accountRoute"))
+// Account login
+app.use("/account/", utilities.handleErrors(accountRoute))
 
 
 /* ***********************
